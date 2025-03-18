@@ -1,0 +1,59 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+}
+
+group = 'com.ltalk.voiceserver'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JavaFX 런타임 추가
+    implementation 'org.openjfx:javafx-controls:17.0.6'
+    implementation 'org.openjfx:javafx-fxml:17.0.6'
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // SQL + JPA
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+    implementation 'org.hibernate:hibernate-core:5.6.14.Final'
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // JUnit
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+application {
+    mainClass.set('com.ltalk.voiceserver.MainApplication')
+}
+
+javafx {
+    version = '17.0.6'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+// JavaFX 실행을 위한 module-path 설정
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += [
+            '--module-path', "${System.getProperty('java.home')}/lib",
+            '--add-modules', 'javafx.controls,javafx.fxml'
+    ]
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    useJUnitPlatform()
+}
