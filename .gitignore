@@ -3,6 +3,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Gradle 관련 캐시 파일 무시
+.gradle/
+build/
+out/
+*.log
+
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
