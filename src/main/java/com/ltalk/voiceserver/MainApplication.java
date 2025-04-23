@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.ltalk.voiceserver.controller.ServerController.startVoiceServer;
+
 public class MainApplication extends Application {
 
 
@@ -20,6 +22,13 @@ public class MainApplication extends Application {
         stage.setScene(scene);
         stage.show();
         ChatServerController.getInstance();
+        new Thread(() -> {
+            try {
+                startVoiceServer();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     public static void main(String[] args) {

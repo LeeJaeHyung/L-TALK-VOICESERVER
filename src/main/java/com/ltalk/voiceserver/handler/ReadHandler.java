@@ -1,8 +1,13 @@
 package com.ltalk.voiceserver.handler;
 
+import com.ltalk.voiceserver.entity.Data;
+import com.ltalk.voiceserver.service.DataService;
+
 import java.nio.ByteBuffer;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
+
+import static com.ltalk.voiceserver.controller.ChatServerController.gson;
 
 public class ReadHandler implements CompletionHandler<Integer, ByteBuffer> {
 
@@ -46,8 +51,11 @@ public class ReadHandler implements CompletionHandler<Integer, ByteBuffer> {
         } else {
             byte[] receivedData = new byte[dataBuffer.remaining()];
             dataBuffer.get(receivedData);
-            String responseJson = new String(receivedData);
-            System.out.println("서버 응답 JSON: " + responseJson);
+            String receivedJson = new String(receivedData);
+            System.out.println("서버 응답 JSON: " + receivedJson);
+            Data data = gson.fromJson(receivedJson, Data.class);
+            DataService dataService = new DataService(data);
+            dataService.interpret();
 
 //            try {
 //                ServerResponse responseData = SocketController.gson.fromJson(responseJson, ServerResponse.class);
