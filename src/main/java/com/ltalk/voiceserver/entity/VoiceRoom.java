@@ -16,7 +16,7 @@ public class VoiceRoom {
     }
 
     public void addMember(long memberId, SocketAddress address) {
-        members.putIfAbsent(memberId, new VoiceMember(memberId, address));
+        members.put(memberId, new VoiceMember(memberId, address));
     }
 
     public void removeMember(long memberId) {
